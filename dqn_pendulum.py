@@ -1,7 +1,7 @@
 # coding: utf-8
-import svgwrite as sw
-from IPython import display
-from IPython.display import SVG
+# import svgwrite as sw
+# from IPython import display
+# from IPython.display import SVG
 import numpy as np
 import time
 
@@ -289,9 +289,10 @@ class simulator:
 
             # 必要ならアニメを表示する
             if movie:
-                display.clear_output(wait=True)
-                display.display(self.env.get_svg())
-                time.sleep(0.01)
+                pass
+                # display.clear_output(wait=True)
+                # display.display(self.env.get_svg())
+                # time.sleep(0.01)
 
 
         # エピソードローカルなメモリ内容をグローバルなメモリに移す
