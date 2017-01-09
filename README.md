@@ -29,6 +29,7 @@ python make_gif.py model/000000.model
 などで、アニメーションgifとプロファイルのpngが生成されます。
 
 
-# adding PyQt4 ver. by nabehide
+### adding PyQt4 ver. by nabehide
+- works on Windows and Mac OSX, (Python 2.7)
 - requires "PyQt4" and "threading" instead of Jupyter
-- To execute, type "python dqn_pendulum_PyQt4.py"
+- To execute, type ```python dqn_pendulum_PyQt4.py```

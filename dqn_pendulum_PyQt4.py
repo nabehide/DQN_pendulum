@@ -5,9 +5,7 @@ from chainer import serializers
 from make_gif import log2gif
 
 import threading
-from PyQt4 import QtGui  # , QtCore
-from PyQt4.QtGui import QApplication, QLabel, QMovie, QPainter, QFontMetrics, QWidget, QGridLayout
-from PyQt4.QtCore import QSize
+from PyQt4.QtGui import QCheckBox, QFont, QApplication, QLabel, QMovie, QPainter, QWidget, QGridLayout
 import sys
 import time
 import numpy as np
@@ -16,7 +14,7 @@ GIF_INTERVAL = 100
 
 
 # Result window
-class UI(QtGui.QWidget):
+class UI(QWidget):
 
     def __init__(self):
         super(UI, self).__init__()
@@ -25,21 +23,21 @@ class UI(QtGui.QWidget):
 
     # initialize window
     def initUI(self):
-        self.font = QtGui.QFont('Calibri')
+        self.font = QFont('Calibri')
         self.setFont(self.font)
         self.setGeometry(50, 50, 270, 256)
         self.setWindowTitle("DQN")
 
         # When showSignal's state is changed, update gif
         global showSignal
-        showSignal = QtGui.QCheckBox('', self)
+        showSignal = QCheckBox('', self)
         showSignal.setHidden(True)
         showSignal.stateChanged.connect(self.showGif)
 
         self.movie = QLabel()  # Gif
         self.label = QLabel()  # Label
 
-        self.layoutMain = QtGui.QGridLayout()
+        self.layoutMain = QGridLayout()
         self.layoutMain.addWidget(self.movie, 0, 0)
         self.layoutMain.addWidget(self.label, 1, 0)
         self.layoutMain.setRowStretch(0, 12)
@@ -155,18 +153,14 @@ def threadMakeGif():
     flagEnd = True
 
 
-# Thread for showing gif
-def threadShowGif():
-    app = QtGui.QApplication(sys.argv)
+if __name__ == '__main__':
+    th_train = threading.Thread(target=threadTrain)
+    th_makeGif = threading.Thread(target=threadMakeGif)
+    th_train.start()
+    th_makeGif.start()
+
+    # show result window
+    app = QApplication(sys.argv)
     ui = UI()
     ui.show()
     sys.exit(app.exec_())
-
-
-if __name__ == '__main__':
-    th_train = threading.Thread(target=threadTrain)
-    th_showGif = threading.Thread(target=threadShowGif)
-    th_makeGif = threading.Thread(target=threadMakeGif)
-    th_train.start()
-    th_showGif.start()
-    th_makeGif.start()
